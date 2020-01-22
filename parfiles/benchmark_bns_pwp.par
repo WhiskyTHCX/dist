@@ -1,0 +1,619 @@
+ActiveThorns = "
+    ADMBase
+    ADMCoupling
+    ADMDerivatives
+    ADMMacros
+    AEILocalInterp
+    BNSTrackerGen
+    Boundary
+    Carpet
+    CarpetInterp
+    CarpetInterp2
+    CarpetIOASCII
+    CarpetIOBasic
+    CarpetIOHDF5
+    CarpetIOScalar
+    CarpetMask
+    CarpetLib
+    CarpetRegrid2
+    CarpetReduce
+    CarpetSlab
+    CartesianCoordinates
+    CartGrid3D
+    Constants
+    CoordBase
+    CoordGauge
+    CTGBase
+    CTGEvolution
+    CTGGauge
+    CTGMatter
+    CTGConstraints
+    CTGRadiativeBC
+    Dissipation
+    Formaline
+    EOS_Barotropic
+    EOS_Thermal
+    EOS_Thermal_Hybrid
+    Fortran
+    GenericFD
+    GlobalDerivative
+    HydroBase
+    HRSCCore
+    InitBase
+    IOUtil
+    LocalInterp
+    LoopControl
+    MoL
+    Multipole
+    NaNChecker
+    NewRad
+    PizzaBase
+    PizzaIDBase
+    PizzaNumUtils
+    PizzaTOV
+    ReflectionSymmetry
+    Slab
+    SpaceMask
+    SphericalSlice
+    SphericalSurface
+    SphericalHarmonicDecomp
+    StaticConformal
+    SummationByParts
+    SystemTopology
+    SymBase
+    TerminationTrigger
+    THC_Analysis
+    THC_Core
+    Time
+    TimerReport
+    TmunuBase
+    Volomnia
+    WeylScal4
+    WorldTube
+"
+
+Cactus::terminate			= "iteration"
+Cactus::cctk_itlast			= 1024
+
+Formaline::output_source_subdirectory		= "../../cactus-source"
+
+TerminationTrigger::max_walltime		= @WALLTIME_HOURS@
+TerminationTrigger::on_remaining_walltime	= 5
+TerminationTrigger::create_termination_file	= "yes"
+TerminationTrigger::termination_from_file	= "yes"
+TerminationTrigger::termination_file		= "../TERMINATE"
+
+TimerReport::output_all_timers_readable		= "yes"
+
+# =============================================================================
+# Grid
+# =============================================================================
+Grid::avoid_origin			= "no"
+Grid::domain			= "full"
+Grid::type			= "coordbase"
+
+ReflectionSymmetry::reflection_x		= "no"
+ReflectionSymmetry::reflection_y		= "no"
+ReflectionSymmetry::reflection_z		= "yes"
+ReflectionSymmetry::avoid_origin_x		= "no"
+ReflectionSymmetry::avoid_origin_y		= "no"
+ReflectionSymmetry::avoid_origin_z		= "no"
+
+Volomnia::symm_weight		= 2
+
+CoordBase::xmin			= -1024
+CoordBase::xmax			=  1024
+CoordBase::ymin			= -1024
+CoordBase::ymax			=  1024
+CoordBase::zmin			=  0
+CoordBase::zmax			=  1024
+
+CoordBase::spacing			= "numcells"
+CoordBase::ncells_x			= @NX@ # 256
+CoordBase::ncells_y			= @NY@ # 256
+CoordBase::ncells_z			= @NZ@ # 128
+
+
+CoordBase::boundary_size_x_lower		= 3
+CoordBase::boundary_size_x_upper		= 3
+CoordBase::boundary_shiftout_x_lower		= 1
+CoordBase::boundary_shiftout_x_upper		= 0
+CoordBase::boundary_staggered_x_lower		= "no"
+CoordBase::boundary_staggered_x_upper		= "no"
+
+CoordBase::boundary_size_y_lower		= 3
+CoordBase::boundary_size_y_upper		= 3
+CoordBase::boundary_shiftout_y_lower		= 0
+CoordBase::boundary_shiftout_y_upper		= 0
+CoordBase::boundary_staggered_y_lower		= "no"
+CoordBase::boundary_staggered_y_upper		= "no"
+
+CoordBase::boundary_size_z_lower		= 3
+CoordBase::boundary_size_z_upper		= 3
+CoordBase::boundary_shiftout_z_lower		= 1
+CoordBase::boundary_shiftout_z_upper		= 0
+CoordBase::boundary_staggered_z_lower		= "no"
+CoordBase::boundary_staggered_z_upper		= "no"
+
+Driver::ghost_size			= 3
+Driver::ghost_size_x		= 3
+Driver::ghost_size_y		= 3
+Driver::ghost_size_z		= 3
+
+Carpet::domain_from_coordbase		= "yes"
+
+InitBase::initial_data_setup_method		= "init_some_levels"
+
+Carpet::max_refinement_levels		= 9
+Carpet::prolongation_order_space		= 3
+Carpet::prolongation_order_time		= 2
+Carpet::use_buffer_zones		= "yes"
+Carpet::enable_all_storage		= "no"
+Carpet::init_fill_timelevels		= "yes"
+
+Carpet::grid_coordinates_filename		= "grid.carpet"
+
+CarpetRegrid2::num_centres		= 3
+CarpetRegrid2::regrid_every		= 256
+
+# ----------- Region 1 --------------------
+CarpetRegrid2::active_1		= "yes"
+CarpetRegrid2::num_levels_1		= 8
+CarpetRegrid2::position_x_1		= 20.3
+# Here, levels 1,2,3 should always be fully contained in the ones
+# of region 3 and hence beirrelevant
+CarpetRegrid2::radius_1	[1]	= 300.0
+CarpetRegrid2::radius_1	[2]	= 200.0
+CarpetRegrid2::radius_1	[3]	= 100.0
+# Those are the actual moving grids
+CarpetRegrid2::radius_1	[4]	= 60.0
+CarpetRegrid2::radius_1	[5]	= 30.0
+CarpetRegrid2::radius_1	[6]	= 15.0
+CarpetRegrid2::radius_1	[7]	= 7.5
+# -----------------------------------------
+
+# ----------- Region 2 --------------------
+CarpetRegrid2::active_2		= "yes"
+CarpetRegrid2::num_levels_2		= 8
+CarpetRegrid2::position_x_2		= -20.3
+# Here, levels 1,2,3 should always be fully contained in the ones
+# of region 3 and hence beirrelevant
+CarpetRegrid2::radius_2	[1]	= 300.0
+CarpetRegrid2::radius_2	[2]	= 200.0
+CarpetRegrid2::radius_2	[3]	= 100.0
+# Those are the actual moving grids
+CarpetRegrid2::radius_2	[4]	= 60.0
+CarpetRegrid2::radius_2	[5]	= 30.0
+CarpetRegrid2::radius_2	[6]	= 15.0
+CarpetRegrid2::radius_2	[7]	= 7.5
+# -----------------------------------------
+
+# ----------- Region 3 --------------------
+CarpetRegrid2::active_3		= "yes"
+CarpetRegrid2::num_levels_3		= 4
+CarpetRegrid2::position_x_3		= 0
+CarpetRegrid2::radius_3	[1]	= 640.0
+CarpetRegrid2::radius_3	[2]	= 320.0
+CarpetRegrid2::radius_3	[3]	= 160.0
+
+CarpetRegrid2::radius_x_3	[4]	= 80.0
+CarpetRegrid2::radius_y_3	[4]	= 80.0
+CarpetRegrid2::radius_z_3	[4]	= 48.0
+
+CarpetRegrid2::radius_x_3	[5]	= 40.0
+CarpetRegrid2::radius_y_3	[5]	= 40.0
+CarpetRegrid2::radius_z_3	[5]	= 24.0
+
+CarpetRegrid2::radius_x_3	[6]	= 20.0
+CarpetRegrid2::radius_y_3	[6]	= 20.0
+CarpetRegrid2::radius_z_3	[6]	= 12.0
+
+CarpetRegrid2::radius_x_3	[7]	= 14.0
+CarpetRegrid2::radius_y_3	[7]	= 14.0
+CarpetRegrid2::radius_z_3	[7]	= 7.5
+
+CarpetRegrid2::radius_3	[8]	= 4.0
+# -----------------------------------------
+
+
+Carpet::time_refinement_factors		= "[1,1,2,4,8,16,32,64,128,256,512]"
+
+CarpetRegrid2::symmetry_rotating180		= "no"
+CarpetRegrid2::verbose		= "no"
+
+BNSTrackerGen::sym_pi		= "no"
+BNSTrackerGen::analysis_reflevel		= 6
+BNSTrackerGen::analyze_every		= 256
+BNSTrackerGen::merge_separation		= 5.0
+BNSTrackerGen::collapse_separation		= -1
+BNSTrackerGen::add_levels_post_merge		= 3
+BNSTrackerGen::add_levels_post_collapse		= 0
+
+NaNChecker::check_every		= 256
+NaNChecker::check_vars		= "
+    HydroBase::rho
+    HydroBase::vel
+    HydroBase::w_lorentz
+    THC_Core::dens
+    THC_Core::scon
+    THC_Core::tau
+    THC_Core::volform
+"
+NaNChecker::action_if_found		= "abort"
+
+# =============================================================================
+# Time integration
+# =============================================================================
+Carpet::num_integrator_substeps		= 4
+
+MoL::ode_method			= "RK4"
+MoL::MoL_Intermediate_Steps		= 4
+MoL::MoL_Num_Scratch_Levels		= 1
+MoL::verbose			= "register"
+
+HydroBase::timelevels		= 3
+
+Time::timestep_method		= "courant_static"
+# This is actually 1/2 of the dtfac on the fine grids
+Time::dtfac			= 0.15
+
+# =============================================================================
+# Initial data
+# =============================================================================
+ADMBase::initial_data		= "PizzaTOV"
+ADMBase::initial_lapse		= "PizzaTOV"
+ADMBase::initial_shift		= "PizzaTOV"
+ADMBase::initial_dtlapse		= "zero"
+ADMBase::initial_dtshift		= "zero"
+HydroBase::initial_hydro		= "PizzaTOV"
+
+# File describing a one-parametric EOS in Pizza format. Used only for initial data.
+PizzaIDBase::eos_file		= "@HOME@/FreeTHC/Data/EOS/PiecewisePoly/H4.pizza"
+
+PizzaTOV::idtype			= "BNS"
+PizzaTOV::star_rhoc[0]		= 5.51790e17
+PizzaTOV::star_posx[0]		= -17.0
+PizzaTOV::star_rhoc[1]		= 5.51790e17
+PizzaTOV::star_posx[1]		= 17.0
+
+# Geometric unit system for initial data, specified by length unit.
+# use CACTUS units
+PizzaBase::length_unit		= 1476.701332464468
+
+# =============================================================================
+# Templated hydrodynamics code
+# =============================================================================
+HydroBase::evolution_method		= "THCode"
+
+THC_Core::eos_type			= "ideal"
+
+TmunuBase::prolongation_type		= "none"
+TmunuBase::stress_energy_storage		= "yes"
+TmunuBase::stress_energy_at_RHS		= "yes"
+TmunuBase::support_old_CalcTmunu_mechanism	= "no"
+
+THC_Core::bc_type			= "none"
+
+HRSCCore::scheme			= "FD"
+HRSCCore::pplim			= "yes"
+HRSCCore::reconstruction		= "MP5"
+HRSCCore::riemann_solver		= "HLLE"
+HRSCCore::flux_split		= "RF"
+HRSCCore::system_split		= "characteristics"
+
+THC_Core::atmo_rho			= 1e-10
+THC_Core::atmo_eps			= 1e-4
+THC_Core::atmo_tolerance		= 0
+
+THC_Core::c2a_BH_alp		= 0.15
+THC_Core::c2a_rho_strict		= 2e-5
+THC_Core::c2a_set_to_nan_on_failure		= "yes"
+THC_Core::c2a_fix_conservatives		= "no"
+
+EOS_Thermal::evol_eos_name		= "Hybrid"
+EOS_Thermal_Hybrid::eos_cold_file		= "@HOME@/FreeTHC/Data/EOS/PiecewisePoly/H4.pizza"
+EOS_Thermal_Hybrid::gamma_thermal		= 1.75
+EOS_Thermal_Hybrid::eps_max		= 10.0
+EOS_Thermal_Hybrid::particle_mass		= 938.985
+
+# =============================================================================
+# Spacetime evolution
+# =============================================================================
+ADMBase::evolution_method		= "CTGamma"
+ADMBase::lapse_evolution_method		= "1+log"
+ADMBase::shift_evolution_method		= "gamma-driver"
+ADMBase::dtlapse_evolution_method		= "1+log"
+ADMBase::dtshift_evolution_method		= "gamma-driver"
+
+CTGBase::timelevels			= 3
+CTGBase::conformal_factor_type		= "w"
+CTGBase::use_matter			= "yes"
+
+CTGEvolution::bc			= radiative
+CTGGauge::eta			= 1.0
+CTGGauge::damping_factor_method		= prescribed
+CTGGauge::damping_factor_type		= "Schnetter-Simple"
+CTGGauge::eta_damping_radius		= 250.0
+CTGEvolution::force_lndetg_zero		= yes
+CTGBase::evolution_system_type		= Z4c
+CTGEvolution::kappa1		= 0.0
+CTGEvolution::kappa2		= 0.0
+CTGEvolution::MaxNumEvolvedVars		= 18
+CTGEvolution::MaxNumConstrainedVars		= 13
+
+CTGConstraints::constraints_persist		= yes
+
+SummationByParts::order		= 4
+SummationByParts::sbp_upwind_deriv		= no
+SummationByParts::onesided_outer_boundaries	= yes
+SummationByParts::onesided_interpatch_boundaries	= no
+SummationByParts::sbp_1st_deriv		= yes
+SummationByParts::sbp_2nd_deriv		= no
+
+SummationByParts::use_dissipation		= no
+GlobalDerivative::use_dissipation		= yes
+SummationByParts::scale_with_h		= yes
+SummationByParts::dissipation_type		= "Kreiss-Oliger"
+SummationByParts::epsdis		= 0.1
+GlobalDerivative::epsdis_for_level		[0] = 0.1
+#GlobalDerivative::epsdis_for_level		[6] = 0.3
+SummationByParts::vars		= "
+    ADMBase::lapse
+    ADMBase::shift
+    CTGBase::conformal_factor
+    CTGBase::conformal_metric
+    CTGBase::curvature_scalar_a
+    CTGBase::curvature_scalar_b
+    CTGBase::curvature_tensor
+    CTGBase::Gamma
+"
+
+
+# =============================================================================
+# Analysis
+# =============================================================================
+
+THC_Analysis::compute_vorticity		= "yes"
+
+#----- Wave Extraction using "WeylScal4" and "Multipole" --------
+
+WeylScal4::offset			= 1.0e-8
+WeylScal4::fd_order			= "4th" # old style
+# WeylScal4::fdOrder		= 4  # New feature
+
+WeylScal4::verbose			= 0
+
+Multipole::nradii			= 5
+Multipole::out_every		= 0 #256
+
+Multipole::radius[0]		= 200
+Multipole::radius[1]		= 300
+Multipole::radius[2]		= 400
+Multipole::radius[3]		= 500
+Multipole::radius[4]		= 600
+Multipole::ntheta			= 120
+Multipole::nphi			= 240
+
+Multipole::variables		= "
+WeylScal4::Psi4r{sw=-2 cmplx='WeylScal4::Psi4i' name='Psi4'}"
+Multipole::l_max			= 8
+
+#------ Spheres for characteristic extraction --------------------
+
+SphericalSlice::nslices		= 5
+SphericalSlice::precalc_sYlms		= no
+SphericalSlice::use_carpet_interp1		= yes
+
+SphericalSlice::set_spherical	[0]	= yes
+SphericalSlice::radius	[0]	= 200.0
+SphericalSlice::type	[0]	= 1patch
+SphericalSlice::use_Llama	[0]	= no
+SphericalSlice::nghostzones	[0]	= 0
+SphericalSlice::ntheta	[0]	= 120
+SphericalSlice::nphi	[0]	= 240
+
+SphericalSlice::set_spherical	[1]	= yes
+SphericalSlice::radius	[1]	= 300.0
+SphericalSlice::type	[1]	= 1patch
+SphericalSlice::use_Llama	[1]	= no
+SphericalSlice::nghostzones	[1]	= 0
+SphericalSlice::ntheta	[1]	= 120
+SphericalSlice::nphi	[1]	= 240
+
+SphericalSlice::set_spherical	[2]	= yes
+SphericalSlice::radius	[2]	= 400.0
+SphericalSlice::type	[2]	= 1patch
+SphericalSlice::use_Llama	[2]	= no
+SphericalSlice::nghostzones	[2]	= 0
+SphericalSlice::ntheta	[2]	= 120
+SphericalSlice::nphi	[2]	= 240
+
+SphericalSlice::set_spherical	[3]	= yes
+SphericalSlice::radius	[3]	= 500.0
+SphericalSlice::type	[3]	= 1patch
+SphericalSlice::use_Llama	[3]	= no
+SphericalSlice::nghostzones	[3]	= 0
+SphericalSlice::ntheta	[3]	= 120
+SphericalSlice::nphi	[3]	= 240
+
+SphericalSlice::set_spherical	[4]	= yes
+SphericalSlice::radius	[4]	= 600.0
+SphericalSlice::type	[4]	= 1patch
+SphericalSlice::use_Llama	[4]	= no
+SphericalSlice::nghostzones	[4]	= 0
+SphericalSlice::ntheta	[4]	= 120
+SphericalSlice::nphi	[4]	= 240
+
+#----- CCE data ------------------------------------------------------
+
+WorldTube::boundary_behavior		= CCE
+WorldTube::lmax			= 8
+WorldTube::ntubes			= 5
+WorldTube::which_slice_to_take	[0]	= 0
+WorldTube::which_slice_to_take	[1]	= 1
+WorldTube::which_slice_to_take	[2]	= 2
+WorldTube::which_slice_to_take	[3]	= 3
+WorldTube::which_slice_to_take	[4]	= 4
+ADMDerivatives::store_time_derivatives		= yes
+ADMDerivatives::store_radial_derivatives	= yes
+ADMDerivatives::timelevels		= 3
+ADMBase::lapse_timelevels		= 3
+ADMBase::shift_timelevels		= 3
+ADMBase::metric_timelevels		= 3
+
+#----- SphericalSurface ---------------------------------------------
+
+SphericalSurface::nsurfaces		= 7
+SphericalSurface::maxntheta		= 140
+SphericalSurface::maxnphi		= 240
+
+SphericalSurface::ntheta	[0]	= 55
+SphericalSurface::nphi	[0]	= 96
+SphericalSurface::nghoststheta	[0]	= 2
+SphericalSurface::nghostsphi	[0]	= 2
+
+SphericalSurface::ntheta	[1]	= 55
+SphericalSurface::nphi	[1]	= 96
+SphericalSurface::nghoststheta	[1]	= 2
+SphericalSurface::nghostsphi	[1]	= 2
+
+SphericalSurface::ntheta	[2]	= 55
+SphericalSurface::nphi	[2]	= 96
+SphericalSurface::nghoststheta	[2]	= 2
+SphericalSurface::nghostsphi	[2]	= 2
+SphericalSurface::set_spherical	[2]	= "yes"
+SphericalSurface::radius	[2]	= 200
+
+SphericalSurface::ntheta	[3]	= 55
+SphericalSurface::nphi	[3]	= 96
+SphericalSurface::nghoststheta	[3]	= 2
+SphericalSurface::nghostsphi	[3]	= 2
+SphericalSurface::set_spherical	[3]	= "yes"
+SphericalSurface::radius	[3]	= 300
+
+SphericalSurface::ntheta	[4]	= 55
+SphericalSurface::nphi	[4]	= 96
+SphericalSurface::nghoststheta	[4]	= 2
+SphericalSurface::nghostsphi	[4]	= 2
+SphericalSurface::set_spherical	[4]	= "yes"
+SphericalSurface::radius	[4]	= 400
+
+SphericalSurface::ntheta	[5]	= 55
+SphericalSurface::nphi	[5]	= 96
+SphericalSurface::nghoststheta	[5]	= 2
+SphericalSurface::nghostsphi	[5]	= 2
+SphericalSurface::set_spherical	[5]	= "yes"
+SphericalSurface::radius	[5]	= 500
+
+SphericalSurface::ntheta	[6]	= 55
+SphericalSurface::nphi	[6]	= 96
+SphericalSurface::nghoststheta	[6]	= 2
+SphericalSurface::nghostsphi	[6]	= 2
+SphericalSurface::set_spherical	[6]	= "yes"
+SphericalSurface::radius	[6]	= 600
+
+#--------CarpetMask--------------------------
+
+CarpetMask::excluded_surface	[0]	= 0
+CarpetMask::excluded_surface_factor	[0]	= 1
+CarpetMask::excluded_surface	[1]	= 1
+CarpetMask::excluded_surface_factor	[1]	= 1
+
+# =============================================================================
+# Output
+# =============================================================================
+IOUtil::out_dir			= "./data/"
+IOUtil::strict_io_parameter_check		= "yes"
+IOUtil::parfile_write		= "copy"
+
+CarpetIOBasic::outinfo_vars		= "
+    Carpet::physical_time_per_hour
+    HydroBase::rho
+"
+
+CarpetIOScalar::outscalar_vars		= "
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::curv
+    ADMBase::metric
+    HydroBase::rho
+    HydroBase::vel
+    HydroBase::w_lorentz
+    HydroBase::eps
+    HydroBase::press
+    THC_Core::dens
+    THC_Core::volform
+"
+
+CarpetIOASCII::out0D_vars		= "
+    BNSTrackerGen::bns_positions
+    Carpet::physical_time_per_hour
+    Carpet::current_physical_time_per_hour
+"
+
+CarpetIOASCII::out2d_vars		= "
+    WorldTube::extracted_vars
+"
+
+CarpetIOHDF5::out1d_vars		= "
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::curv
+    ADMBase::metric
+    ADMDerivatives::alp_dr
+    HydroBase::rho
+    HydroBase::vel
+    HydroBase::w_lorentz
+    HydroBase::eps
+    HydroBase::press
+    THC_Analysis::vorticity_xy
+    THC_Core::dens
+    THC_Core::scon
+    THC_Core::tau
+    THC_Core::volform
+    WeylScal4::Psi4r
+    WeylScal4::Psi4i
+"
+
+CarpetIOHDF5::out2d_vars		= "
+    ADMBase::lapse
+    ADMBase::shift
+    HydroBase::rho
+    HydroBase::vel
+    HydroBase::w_lorentz
+    HydroBase::eps
+    HydroBase::press
+    THC_Analysis::vorticity_xy
+    THC_Core::volform
+    WeylScal4::Psi4r
+    WeylScal4::Psi4i
+"
+
+CarpetIOHDF5::out_vars		= "
+    ADMBase::lapse
+    HydroBase::rho
+    HydroBase::vel
+    HydroBase::eps
+    HydroBase::w_lorentz
+    HydroBase::press
+"
+
+# These seem to create problems in the 2D output
+#CarpetIOHDF5::out3D_ghosts		= "no"
+#CarpetIOHDF5::out3D_outer_ghosts		= "no"
+CarpetIOHDF5::output_index		= "no"
+
+CarpetIOASCII::one_file_per_group		= "yes"
+
+CarpetIOBasic::outinfo_every		= 256
+CarpetIOASCII::out0d_criterion		= "divisor"
+CarpetIOASCII::out0d_every		= 256
+CarpetIOASCII::out1d_every		= 0
+CarpetIOASCII::out2d_every		= 0
+CarpetIOScalar::outscalar_criterion		= "divisor"
+CarpetIOScalar::outscalar_every		= 0
+CarpetIOHDF5::out1d_every		= 0
+CarpetIOHDF5::out2d_every		= 0
+CarpetIOHDF5::out_every		= 0
+
+# vim: set ft=sh tabstop=20 noexpandtab :
