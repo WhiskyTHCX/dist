@@ -5,6 +5,13 @@ This tutorial will guide you through the steps necessary to perform a binary
 neutron star (NS) merger simulations with tabulated nuclear equation of state
 (EOS) and neutrino leakage.
 
+Changes
+-------
+
+* June 9, 2020. Removed discussion on the `mass_conversion` parameter, since it
+is actually not needed when using the tables and scripts provided with
+WhiskyTHC.
+
 Downloading WhiskyTHC
 ---------------------
 
@@ -36,7 +43,7 @@ This will download [Cactus](http://cactuscode.org/),
 and [WhiskyTHC](http://personal.psu.edu/dur566/whiskythc.html) and
 place them in a folder called `Cactus`. This will also download
 [batchtools](http://bitbucket.org/dradice/batchtools), the set of scripts I use
-to manage simulations. 
+to manage simulations.
 
 GetComponents has some problem with the capitalization of repository names from
 bitbucket, where WhiskyTHC is hosted. To workaround these issues, it is
@@ -71,7 +78,7 @@ of components to be built, and a config file. An example of thornlist is the
 Example of optionlists for some machines where I compiled and run WhiskyTHC can
 be found in the `batchtools/templates/cactus` subfolder of Cactus.
 
-For example, on SDSC Comet you can create a configuration 
+For example, on SDSC Comet you can create a configuration
 
 ~~~
     $ yes | make thc THORNLIST=thornlists/full.th \
@@ -118,7 +125,7 @@ folder. In particular, the instructions refer to the binary
 `LS220_T001_13641364_45km` (LS220 EOS; initial temperature 0.01 MeV; 1.364 Msun
 vs 1.364 Msun; initial separation 45 km) that can be found in the
 `Data/LoreneData/GW170817/R01` folder. The same procedure can be used to run
-other binaries. 
+other binaries.
 
 Parameter File
 --------------
@@ -134,7 +141,7 @@ simulation:
         ADMBase
         ...
     "
-~~~ 
+~~~
 
 This is followed by the parameters for each thorn. You can find more details
 about the parfile in the Cactus documentation `Cactus/doc/UserGuide.pdf` and
@@ -177,33 +184,6 @@ Again note that if you are using `batchtools` `@HOME@` will be replaced by the
 path to your home directory and I am assuming that you checked out WhiskyTHC
 there. You might need to adjust these paths if you have placed WhiskyTHC and/or
 the Data distribution in another location.
-
-Please note that WhiskyTHC assumes the specific energy density to be always
-positive. This is achieved by changing the reference baryon mass in the EOS
-(see the `mass_factor` database in the HDF5 files). For consistency, you should
-change the `LoreneID::mass_conversion` parameter when reading Lorene initial
-data, because Lorene assumes the baryon rest mass to be the atomic mass unit.
-
-In our case
-
-~~~
-    $ h5dump -d mass_factor ./Data/EOS/LS220/LS_220_hydro_27-Sep-2014.h5
-    HDF5 "LS_220_hydro_27-Sep-2014.h5" {
-        DATASET "mass_factor" {
-        DATATYPE  H5T_IEEE_F64LE
-        DATASPACE  SIMPLE { ( 1 ) / ( 1 ) }
-        DATA {
-            (0): 922.316
-        }
-    }
-    }
-~~~
-
-So we need to set `LoreneID::mass_factor` to 922.316 / 931.5:
-
-~~~
-    LoreneID::mass_conversion = 0.9901468275834749
-~~~
 
 The tables used for the evolution are set with the following instructions in
 the parfile:
@@ -252,7 +232,7 @@ basic resolution are specified by
     CoordBase::ymax     =  1024
     CoordBase::zmin     =  0
     CoordBase::zmax     =  1024
-    
+
     CoordBase::spacing  = "numcells"
     CoordBase::ncells_x = 128
     CoordBase::ncells_y = 128
@@ -308,7 +288,7 @@ First we create a folder for the simulation:
 
 ~~~
     $ cd $SCRATCH
-    $ mkdir -p simulations/GW170817/LS220_M13641364 
+    $ mkdir -p simulations/GW170817/LS220_M13641364
 ~~~
 
 The simulation folder needs to be in a nested folder several levels below
@@ -340,7 +320,7 @@ Now we are ready to setup the simulation
     $ batchtools init \
         --parfile ~/FreeTHC/parfiles/bns_gw170817_ls220_q1.par \
         --exe ~/FreeTHC/Cactus/exe/cactus_thc \
-        --batch ~/FreeTHC/Cactus/batchtools/templates/cactus/comet.sub 
+        --batch ~/FreeTHC/Cactus/batchtools/templates/cactus/comet.sub
 ~~~
 
 This will create a `BATCH` folder in the current directory. Please edit the

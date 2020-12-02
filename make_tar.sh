@@ -40,6 +40,7 @@ FILELIST="
 ./Data/LoreneData/GW170817/R01/LS220_T001_13641364_45km/eos.lorene
 ./README.html
 ./README.md
+./docs/overview.pdf
 ./parfiles/benchmark_bns_ls220.par
 ./parfiles/benchmark_bns_pwp.par
 ./parfiles/benchmark_hmns_ls220.par

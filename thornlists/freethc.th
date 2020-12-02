@@ -58,6 +58,8 @@ THCCore/THC_Tracer
 !URL      = https://bitbucket.org/FreeTHC/thcextra.git
 !REPO_PATH= $2
 !CHECKOUT =
+THCExtra/AddPuncture
+THCExtra/BHTrackerMany
 THCExtra/BNSAnalysis
 THCExtra/BNSTrackerGen
 THCExtra/Composition
@@ -70,6 +72,7 @@ THCExtra/EOS_Thermal_Table3d
 THCExtra/FakeRates
 THCExtra/ID_Switch_EOS
 THCExtra/LoreneID
+THCExtra/NSTracker
 THCExtra/PizzaBase
 THCExtra/PizzaIDBase
 THCExtra/PizzaNumUtils

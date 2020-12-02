@@ -67,7 +67,6 @@ ActiveThorns = "
     Time
     TimerReport
     TmunuBase
-    Volomnia
     WeylScal4
     WorldTube
 "
@@ -98,8 +97,6 @@ ReflectionSymmetry::reflection_z		= "yes"
 ReflectionSymmetry::avoid_origin_x		= "no"
 ReflectionSymmetry::avoid_origin_y		= "no"
 ReflectionSymmetry::avoid_origin_z		= "no"
-
-Volomnia::symm_weight		= 2
 
 CoordBase::xmin			= -1024
 CoordBase::xmax			=  1024

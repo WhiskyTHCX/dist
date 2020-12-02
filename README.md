@@ -38,7 +38,7 @@ This will download [Cactus](http://cactuscode.org/),
 and [WhiskyTHC](http://www.astro.princeton.edu/~dradice/whiskythc.html) and
 place them in a folder called `Cactus`. This will also download
 [batchtools](http://bitbucket.org/dradice/batchtools), the set of scripts I use
-to manage simulations. 
+to manage simulations.
 
 [//]: # (GetComponents has some problem with the capitalization of repository names from)
 [//]: # (bitbucket, where WhiskyTHC is hosted. To workaround these issues, it is)
@@ -73,7 +73,7 @@ of components to be built, and a config file. An example of thornlist is the
 Example of optionlists for some machines where I compiled and run WhiskyTHC can
 be found in the `batchtools/templates/cactus` subfolder of Cactus.
 
-For example, on SDSC Comet you can create a configuration 
+For example, on SDSC Comet you can create a configuration
 
 ~~~
     $ yes | make whiskythc THORNLIST=thornlists/full.th \

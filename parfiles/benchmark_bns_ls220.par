@@ -62,12 +62,10 @@ ActiveThorns = "
     THC_Core
     THC_LeakageBase
     THC_Refluxing
-    THC_SubGrid
     THC_Tracer
     Time
     TimerReport
     TmunuBase
-    Volomnia
     WeakRates
     WatchDog
 "
@@ -91,8 +89,6 @@ ReflectionSymmetry::reflection_z		= "yes"
 ReflectionSymmetry::avoid_origin_x		= "yes"
 ReflectionSymmetry::avoid_origin_y		= "yes"
 ReflectionSymmetry::avoid_origin_z		= "yes"
-
-Volomnia::symm_weight		= 2
 
 CoordBase::xmin			= -1024
 CoordBase::xmax			=  1024
@@ -310,7 +306,7 @@ EOS_Thermal_Extable::extend_ye		= "yes"
 
 EOS_Thermal_Table3d::eos_db_loc		= "@HOME@/FreeTHC/Data/EOS"
 EOS_Thermal_Table3d::eos_folder		= "LS220"
-EOS_Thermal_Table3d::eos_filename		= "LS_220_06-May-2013.h5"
+EOS_Thermal_Table3d::eos_filename		= "LS_220_hydro_27-Sep-2014.h5"
 
 THC_LeakageBase::neu_abs_type		= "None"
 THC_LeakageBase::num_sph_grids		= 2
@@ -328,13 +324,6 @@ WeakRates::use_temp_max_ext		= "yes"
 WeakRates::use_temp_min_ext		= "yes"
 WeakRates::use_ye_max_ext		= "yes"
 WeakRates::use_ye_min_ext		= "yes"
-
-# =============================================================================
-# Turbulence model
-# =============================================================================
-THC_SubGrid::model			= "viscous"
-THC_SubGrid::viscosity		= "alpha"
-THC_SubGrid::lmix			= 3.385891e-03 # 5 meters
 
 # =============================================================================
 # Spacetime evolution

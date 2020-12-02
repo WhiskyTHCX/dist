@@ -261,7 +261,6 @@ HydroBase::initial_Abar		= "zero"
 PizzaIDBase::eos_file		= "@HOME@/FreeTHC/Data/EOS/LS220/0.01MeV/LS_220_25-Sept-2017.pizza"
 LoreneID::lorene_bns_file		= "@HOME@/FreeTHC/Data/LoreneData/GW170817/R01/LS220_T001_13641364_45km/resu.d"
 LoreneID::rho_cut			= 1.0e-5
-LoreneID::mass_conversion		= 0.9901468275834749
 
 # Geometric unit system for initial data, specified by length unit.
 # use CACTUS units
