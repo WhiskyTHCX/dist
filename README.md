@@ -125,9 +125,7 @@ tables to create initial data in different formats
 
 Please note that WhiskyTHC assumes the specific energy density to be always
 positive. This is achieved by changing the reference baryon mass in the EOS
-(see the `mass_factor` database in the HDF5 files). For consistency, you should
-change the `LoreneID::mass_conversion` parameter when reading Lorene initial
-data, because Lorene assumes the baryon rest mass to be the atomic mass unit.
+(see the `mass_factor` database in the HDF5 files).
 
 Analyze and Visualize Results
 -----------------------------

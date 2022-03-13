@@ -9,7 +9,7 @@
 !DEFINE ARR  = $ROOT/arrangements
 !DEFINE COMPONENTLIST_TARGET = $ROOT/thornlists/
 
-!DEFINE ET_RELEASE = ET_2019_10
+!DEFINE ET_RELEASE = ET_2020_11
 
 # Cactus Flesh
 !TARGET   = $ROOT
@@ -412,6 +412,7 @@ THCCore/THC_InitialData
 THCCore/THC_LeakageBase
 THCCore/THC_LeakageM0
 THCCore/THC_Refluxing
+THCCore/THC_SubGrid
 THCCore/THC_Test
 THCCore/THC_Tracer
 

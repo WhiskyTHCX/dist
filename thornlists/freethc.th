@@ -49,6 +49,7 @@ THCCore/THC_InitialData
 THCCore/THC_LeakageBase
 THCCore/THC_LeakageM0
 THCCore/THC_Refluxing
+THCCore/THC_SubGrid
 THCCore/THC_Test
 THCCore/THC_Tracer
 
