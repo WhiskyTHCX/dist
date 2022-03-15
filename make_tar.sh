@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TAR=/opt/local/bin/gnutar
+TAR=/usr/bin/tar
 FILELIST="
 ./Data/EOS/BHB/0.01MeV/BHB_lp_25-Sept-2017.lorene
 ./Data/EOS/BHB/0.01MeV/BHB_lp_25-Sept-2017.pizza
