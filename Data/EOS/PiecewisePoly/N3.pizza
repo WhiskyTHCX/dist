@@ -1,0 +1,4 @@
+name      = N3 (Polytropic)
+type      = polytrope
+poly_n    = 3
+poly_rmd  = 6.176269145886163e+20

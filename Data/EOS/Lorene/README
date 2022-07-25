@@ -1,0 +1,6 @@
+Hacking Lorene 
+Original tables are substituted by following files 
+
+Hempel_DD2_eostable_NFBetaEq_pnu_T=00.500.lorene -> eos_bpal12.d -> key = 12
+LS220B0.lorene -> eos_akmalpr.d -> key = 13
+Hempel_SFHo_eostable_NFBetaEq_pnu_T=00.500.lorene -> eos_glendnh3.d -> key = 16
