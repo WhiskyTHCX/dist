@@ -1,0 +1,52 @@
+<h1 id="whiskythc">WhiskyTHC</h1>
+<p>The Templated Hydrodynamics Code</p>
+<p>WhiskyTHC is a state-of-the-art GRHD solver for Cactus.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>WhiskyTHC is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+<p>WhiskyTHC is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+<p>By using WhiskyTHC you agree that YOU WILL BE FULLY RESPONSIBLE FOR THE CORRECTNESS OF ANY SCIENTIFIC RESULTS OBTAINED WITH THE CODE.</p>
+<h2 id="downloading">Downloading</h2>
+<p>This tarball contains scripts and microphysics tables for WhiskyTHC. It does not contain the actual source code, which is instead hosted on <a href="https://bitbucket.org">bitbucket</a>.</p>
+<p>Use the GetComponents utility to checkout Cactus and WhiskyTHC</p>
+<pre><code>    $ ./scripts/GetComponents --parallel thornlists/full.th</code></pre>
+<p>This will download <a href="http://cactuscode.org/">Cactus</a>, <a href="http://carpetcode.org/">Carpet</a>, <a href="https://bitbucket.org/llamacode/">CTGamma</a>, and <a href="http://www.astro.princeton.edu/~dradice/whiskythc.html">WhiskyTHC</a> and place them in a folder called <code>Cactus</code>. This will also download <a href="http://bitbucket.org/dradice/batchtools">batchtools</a>, the set of scripts I use to manage simulations.</p>
+<p>NOTE: <code>GetComponents</code> will place a copy of the thornlist used for the checkout in <code>Cactus/thornlists</code>.</p>
+<h2 id="compiling">Compiling</h2>
+<p>Detailed instructions on how to compile can be found in <code>Cactus/doc/UsersGuide.pdf</code>. In brief, you need to load all necessary modules, create a configuration, and then compile it.</p>
+<p>Example of module lists for some of the machines I have compiled and run WhiskyTHC can be found in the <code>Cactus/batchtools/templates/cactus</code> folder. If you are using <code>bash</code> as login shell, you can load them with the <code>source</code> command (in the <code>Cactus</code> folder):</p>
+<pre><code>    $ source batchtools/templates/cactus/comet.env</code></pre>
+<p>To create a configuration you will need to prepare a thornlist, that is a list of components to be built, and a config file. An example of thornlist is the <code>full.th</code> file, which contains everything I typically use in a production run. Example of optionlists for some machines where I compiled and run WhiskyTHC can be found in the <code>batchtools/templates/cactus</code> subfolder of Cactus.</p>
+<p>For example, on SDSC Comet you can create a configuration</p>
+<pre><code>    $ yes | make whiskythc THORNLIST=thornlists/full.th \
+                           options=batchtools/templates/cactus/comet.cfg</code></pre>
+<p>If this command is successful you can then compile with</p>
+<pre><code>    $ make whiskythc -j4</code></pre>
+<h2 id="running">Running</h2>
+<p>To run a simulation you will need a parfile. Some examples are provided in the “parfiles” directory. Note that the examples include special strings delimited by the “@” character that are substituted automatically if you use batchtools. If you do not want to use batchtools, you will need to replace them manually.</p>
+<p>A minimal script to run Cactus using 4 process with 2 threads each would look like this</p>
+<pre><code>    $ export OMP_NUM_THREADS=2
+    $ export CACTUS_NUM_PROCS=4
+    $ export CACTUS_NUM_THREADS=2
+    $ mpirun -np 4 ./cactus_whiskythc someparfile.par</code></pre>
+<p>I recommend to use <a href="http://bitbucket.org/dradice/batchtools">batchtools</a> to run simulations. <a href="http://simfactory.org/">simfactory</a> can also be used with WhiskyTHC.</p>
+<h2 id="microphysics-tables">Microphysics Tables</h2>
+<p>The <code>Data</code> folder contains tables with several nuclear equations of state (EOS). If you plan to run with tabulated EOS, you will need to either place the <code>Data</code> folder in your <code>$HOME</code> directory, or adapt the parfiles so that the code can find these tables at runtime. <code>THCExtra/tools/eos_tables</code>, in the <code>Cactus/repos</code> folder, contains scripts that can be used to generate these tables from those on <a href="https://sntheory.org/equationofstate">stellarcollapse.org</a>. These can generate the tables used for the evolution and zero-temperature, beta-equilibrated, tables to create initial data in different formats (<a href="http://www.lorene.obspm.fr/">Lorene</a>, Pizza, <a href="http://www.gravity.phys.uwm.edu/rns/">RNS</a>, etc.).</p>
+<p>Please note that WhiskyTHC assumes the specific energy density to be always positive. This is achieved by changing the reference baryon mass in the EOS (see the <code>mass_factor</code> database in the HDF5 files).</p>
+<h2 id="analyze-and-visualize-results">Analyze and Visualize Results</h2>
+<p>Note that WhiskyTHC uses geometrized units with G = c = Msun = 1.</p>
+<p>For basic analysis and visualization of WhiskyTHC results, I developed two python packages:</p>
+<ul>
+<li><a href="https://bitbucket.org/dradice/scidata">scidata</a>: utilities to read Cactus/Carpet data into python for further analysis.</li>
+<li><a href="https://bitbucket.org/dradice/scivis">scivis</a>: library of 2D visualization scripts (uses scidata).</li>
+</ul>
+<p>Please refer to the <code>README</code> files of those packages for instructions on how to install and use them.</p>
+<p>For more advanced visualizations, including 3D volume renderings, you can use <a href="https://wci.llnl.gov/simulation/computer-codes/visit">VisIt</a>. VisIt already includes a <a href="http://cactuscode.org/documentation/visualization//VisIt/">plugin to read Cactus/Carpet data</a>. Note that this plugin can only handle correctly vertex-centered AMR data. It is still possible to use it to visualize cell-centered AMR data with VisIt and with this plugin, however this produces small, but visible, artifacts at refinement level boundaries.</p>
+<h2 id="public-release">Public Release</h2>
+<p>The public release of WhiskyTHC does not include project specific modules and modules from thirty party that I do not have permission to share. Experimental modules of WhiskyTHC are also not included.</p>
+<h2 id="references">References</h2>
+<p>If you find WhiskyTHC to be useful for your research, I ask that you please cite the following references:</p>
+<ul>
+<li><p>D. Radice and L. Rezzolla, THC: a New High-Order Finite-Difference High-Resolution Shock-Capturing Code for Special-Relativistic Hydrodynamics, Astronomy &amp; Astrophysics 547, A26 (2012), <a href="https://arxiv.org/abs/1206.6502">arXiv:1206.6502</a>.</p></li>
+<li><p>D. Radice, L. Rezzolla, and F. Galeazzi, Beyond Second-Order Convergence in Simulations of Binary Neutron Stars in Full General-Relativity, Monthly Notices of the Royal Astronomical Society: Letters 437, L46 (2014), <a href="https://arxiv.org/abs/1306.6052">arXiv:1306.6052</a></p></li>
+<li><p>D. Radice, L. Rezzolla, and F. Galeazzi, High-Order Fully General-Relativistic Hydrodynamics: new Approaches and Tests, Classical and Quantum Gravity 31, 075012 (2014), <a href="https://arxiv.org/abs/1312.5004">arXiv:1312.5004</a></p></li>
+</ul>
