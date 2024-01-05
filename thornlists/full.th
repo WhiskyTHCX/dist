@@ -384,7 +384,7 @@ LocalThorns/Boost
 # Refluxing
 !TARGET   = $ARR
 !TYPE     = git
-!URL      = https://bitbucket.org/dradice/refluxing.git
+!URL      = https://bitbucket.org/FreeTHC/refluxing.git
 !REPO_PATH= ../../arrangements/$1/../../repos/refluxing
 !CHECKOUT = 
 LocalThorns/Refluxing
