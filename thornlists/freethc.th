@@ -80,3 +80,18 @@ THCExtra/PizzaNumUtils
 THCExtra/PizzaTOV
 THCExtra/Units
 THCExtra/WeakRates
+
+# CTGamma
+!TARGET   = $ARR
+!TYPE     = git
+!URL      = https://bitbucket.org/llamacode/ctgamma.git
+!REPO_PATH= $2
+!REPO_BRANCH = dradice/legacy
+!CHECKOUT =
+CTGamma/CartesianCoordinates
+CTGamma/CTGBase
+CTGamma/CTGConstraints
+CTGamma/CTGEvolution
+CTGamma/CTGGauge
+CTGamma/CTGMatter
+CTGamma/CTGRadiativeBC
